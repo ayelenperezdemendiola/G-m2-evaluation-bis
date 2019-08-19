@@ -2,6 +2,7 @@
 
 const inputs = document.querySelectorAll ('.input');
 const button = document.querySelector ('.start__button');
+const cardFrontImg = document.querySelectorAll ('.card__img-front');
 let gameValue='';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
 
@@ -19,7 +20,14 @@ function start(){
   fetch(ENDPOINT)
     .then(response => response.json())
     .then(data => {
-      console.log (data[0].image);
+      for (let i = 0; i < gameValue; i ++){
+        const pokemonImg = data[i].image;
+        cardFrontImg[i].src = pokemonImg;
+
+      }
+      //recoger mis datos de html en constantes
+      //comprobar que funcionan las imagenes para 4.
+      //hacer que si pido mas cartas se agregen más lis o menos lis
     }
 )
 }
