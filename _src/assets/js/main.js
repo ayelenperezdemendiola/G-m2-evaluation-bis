@@ -7,13 +7,28 @@ const cardList = document.querySelector ('.cards__list');
 const listContainer = document.querySelector ('.list__container');
 const adalabImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
 let gameValue='';
+let gameValueToPlay = '';
+const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
 
+function showCard (event) {
+  console.log (event.currentTarget);
+  console.log ('click en carta');
+  //tengo que decirle que event.currentTarget.querySelector para seleccionar la imagen y mostrarla y ocultarla
 
+}
 function choosedValue (event){
   gameValue = event.currentTarget.value;
+  localStorage.setItem('numberToPlay', gameValue);
   console.log (gameValue);
 }
+
+// function paintGameValue (){
+//   gameValueToPlay = localStorage.getItem ('numberToPlay');
+//   console.log (gameValueToPlay);
+//   //no me sale la parte del console log, de que al recargar las cartas sigan ahi.
+//   //esta función está llamada pero no usada.
+// }
 
 for (const input of inputs){
   input.addEventListener ('click', choosedValue);
@@ -48,7 +63,7 @@ function moreElementstoPlay (){
     const cardNewItem5 = createNewElement ('li', 'list__card');
     cardNewItem5.classList.add ('newItem-5');
     cardNewItem5.classList.add ('newItem');
-    const cardNewImg5 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
+    const cardNewImg5 = createNewImage ('img', 'card__img-front', 'pokemon image', defaultImage);
     cardNewImg5.classList.add ('newImgFront-5');
     const cardNewImgBack5 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
     cardNewItem5Container.appendChild(cardNewImg5);
@@ -59,7 +74,7 @@ function moreElementstoPlay (){
     const cardNewItem6 = createNewElement ('li', 'list__card');
     cardNewItem6.classList.add ('newItem-6');
     cardNewItem6.classList.add ('newItem');
-    const cardNewImg6 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
+    const cardNewImg6 = createNewImage ('img', 'card__img-front', 'pokemon image', defaultImage);
     cardNewImg6.classList.add ('newImgFront-6');
     const cardNewImgBack6 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
     cardNewItem6Container.appendChild(cardNewImg6);
@@ -72,7 +87,7 @@ function moreElementstoPlay (){
     const cardNewItem5 = createNewElement ('li', 'list__card');
     cardNewItem5.classList.add ('newItem-5');
     cardNewItem5.classList.add ('newItem');
-    const cardNewImg5 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
+    const cardNewImg5 = createNewImage ('img', 'card__img-front', 'pokemon image', defaultImage);
     cardNewImg5.classList.add ('newImgFront-5');
     const cardNewImgBack5 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
     cardNewItem5Container.appendChild(cardNewImg5);
@@ -83,7 +98,7 @@ function moreElementstoPlay (){
     const cardNewItem6 = createNewElement ('li', 'list__card');
     cardNewItem6.classList.add ('newItem-6');
 
-    const cardNewImg6 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
+    const cardNewImg6 = createNewImage ('img', 'card__img-front', 'pokemon image', defaultImage);
     cardNewImg6.classList.add ('newImgFront-6');
     cardNewItem6.classList.add ('newItem');
     const cardNewImgBack6 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
@@ -95,7 +110,7 @@ function moreElementstoPlay (){
     const cardNewItem7 = createNewElement ('li', 'list__card');
     cardNewItem7.classList.add ('newItem-7');
     cardNewItem7.classList.add ('newItem');
-    const cardNewImg7 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
+    const cardNewImg7 = createNewImage ('img', 'card__img-front', 'pokemon image', defaultImage);
     cardNewImg7.classList.add ('newImgFront-7');
     const cardNewImgBack7 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
     cardNewItem7Container.appendChild(cardNewImg7);
@@ -106,7 +121,7 @@ function moreElementstoPlay (){
     const cardNewItem8 = createNewElement ('li', 'list__card');
     cardNewItem8.classList.add ('newItem-8');
     cardNewItem8.classList.add ('newItem');
-    const cardNewImg8 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
+    const cardNewImg8 = createNewImage ('img', 'card__img-front', 'pokemon image', defaultImage);
     cardNewImg8.classList.add ('newImgFront-8');
     const cardNewImgBack8 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
     cardNewItem8Container.appendChild(cardNewImg8);
@@ -115,11 +130,13 @@ function moreElementstoPlay (){
     listContainer.appendChild (cardNewItem8);
 
   } else {
-  //No sé cómo hacer para que no se me repitan
     console.log ('soy una partida de 4');
-
+  } const allCards = document.querySelectorAll ('.list__card');
+  console.log (allCards);
+  for (const cards of allCards){
+    console.log (cards);
+    cards.addEventListener ('click', showCard);
   }
-
 }
 
 function remove (){
@@ -130,14 +147,13 @@ function remove (){
   }
 }
 
-
-
 function start(){
+  moreElementstoPlay ();
   const ENDPOINT = api + gameValue + '.json';
   fetch(ENDPOINT)
     .then(response => response.json())
     .then(data => {
-      moreElementstoPlay();
+      // moreElementstoPlay();
       const cardFrontImg = document.querySelectorAll ('.card__img-front');
       for (let i = 0; i < gameValue; i ++){
         const pokemonImg = data[i].image;
@@ -150,4 +166,4 @@ function start(){
 
 button.addEventListener('click', start);
 
-// Al hacer clic sobre el botón de 'Comenzar', nuestra aplicación debe recoger el valor del tamaño de la partida y conectarse a un API que devuelve un listado de cartas. La URL del API es https://raw.githubusercontent.com/Adalab/cards-data/master/:NUMERO.json, donde :NUMERO puede tomar el valor de 4, 6 u 8. Por ejemplo, para pedir 6 cartas usariamos https://raw.githubusercontent.com/Adalab/cards‒data/master/6.json
+// Al hacer clic sobre una carta vamos a mostrar su parte frontal y a ocultar su parte trasera. Al volver a hacer clic haremos la operación contraria, y volveremos a ver su parte trasera y ocultar la frontal.

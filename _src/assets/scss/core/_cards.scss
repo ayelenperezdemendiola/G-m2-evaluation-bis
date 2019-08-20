@@ -17,3 +17,9 @@
 .card__img-back{
   border: 1px solid grey;
 }
+.card__img-front{
+  display: none;
+}
+.show {
+  display: block;
+}
