@@ -11,10 +11,13 @@ let gameValueToPlay = '';
 const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
 
+
 function showCard (event) {
-  console.log (event.currentTarget);
-  console.log ('click en carta');
-  //tengo que decirle que event.currentTarget.querySelector para seleccionar la imagen y mostrarla y ocultarla
+  const currentContainer = event.currentTarget;
+  const currentImgFront = currentContainer.querySelector ('.card__img-front');
+  currentImgFront.classList.toggle ('show');
+  const currentImgBack = currentContainer.querySelector ('.card__img-back');
+  currentImgBack.classList.toggle ('hide');
 
 }
 function choosedValue (event){
@@ -131,11 +134,10 @@ function moreElementstoPlay (){
 
   } else {
     console.log ('soy una partida de 4');
-  } const allCards = document.querySelectorAll ('.list__card');
-  console.log (allCards);
-  for (const cards of allCards){
-    console.log (cards);
-    cards.addEventListener ('click', showCard);
+  }
+  const allCardsContainers = document.querySelectorAll ('.card__container');
+  for (const container of allCardsContainers){
+    container.addEventListener ('click', showCard);
   }
 }
 
@@ -166,4 +168,3 @@ function start(){
 
 button.addEventListener('click', start);
 
-// Al hacer clic sobre una carta vamos a mostrar su parte frontal y a ocultar su parte trasera. Al volver a hacer clic haremos la operación contraria, y volveremos a ver su parte trasera y ocultar la frontal.
