@@ -20,18 +20,25 @@ function showCard (event) {
   currentImgBack.classList.toggle ('hide');
 
 }
+
+function whenLoad (){
+  console.log ('me han recargado');
+  gameValueToPlay = localStorage.getItem ('numberToPlay');
+  for (const input of inputs){
+    if (input.value === gameValueToPlay){
+      console.log ('soy igual al número para jugar', input.value);
+    } else {
+      console.log ('Yo ya no soy igual');
+    }
+  }
+}
+window.addEventListener ('load', whenLoad);
+
 function choosedValue (event){
   gameValue = event.currentTarget.value;
   localStorage.setItem('numberToPlay', gameValue);
   console.log (gameValue);
 }
-
-// function paintGameValue (){
-//   gameValueToPlay = localStorage.getItem ('numberToPlay');
-//   console.log (gameValueToPlay);
-//   //no me sale la parte del console log, de que al recargar las cartas sigan ahi.
-//   //esta función está llamada pero no usada.
-// }
 
 for (const input of inputs){
   input.addEventListener ('click', choosedValue);
@@ -155,7 +162,7 @@ function start(){
   fetch(ENDPOINT)
     .then(response => response.json())
     .then(data => {
-      // moreElementstoPlay();
+      console.log (data);
       const cardFrontImg = document.querySelectorAll ('.card__img-front');
       for (let i = 0; i < gameValue; i ++){
         const pokemonImg = data[i].image;
