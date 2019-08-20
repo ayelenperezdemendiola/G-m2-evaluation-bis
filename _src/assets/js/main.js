@@ -9,6 +9,7 @@ const adalabImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADA
 let gameValue='';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
 
+
 function choosedValue (event){
   gameValue = event.currentTarget.value;
   console.log (gameValue);
@@ -33,21 +34,20 @@ function createNewImage (myImg, myClass, myAlt, mySrc){
 }
 
 function moreElementstoPlay (){
+  remove ();
   const cardNewItem5Container = createNewElement('div', 'card__container');
-  cardNewItem5Container.classList.add ('card5-co');
+  cardNewItem5Container.classList.add ('new-card');
   const cardNewItem6Container = createNewElement('div', 'card__container');
-  cardNewItem6Container.classList.add ('card6-co');
+  cardNewItem6Container.classList.add ('new-card');
   const cardNewItem7Container = createNewElement('div', 'card__container');
-  cardNewItem7Container.classList.add ('card7-co');
+  cardNewItem7Container.classList.add ('new-card');
   const cardNewItem8Container = createNewElement('div', 'card__container');
-  cardNewItem8Container.classList.add ('card8-co');
-
+  cardNewItem8Container.classList.add ('new-card');
 
   if (gameValue > 4 && gameValue <= 6){
-    //No sé cómo hacer para que no se me repitan
-    //Creo
     const cardNewItem5 = createNewElement ('li', 'list__card');
     cardNewItem5.classList.add ('newItem-5');
+    cardNewItem5.classList.add ('newItem');
     const cardNewImg5 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
     cardNewImg5.classList.add ('newImgFront-5');
     const cardNewImgBack5 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
@@ -58,6 +58,7 @@ function moreElementstoPlay (){
 
     const cardNewItem6 = createNewElement ('li', 'list__card');
     cardNewItem6.classList.add ('newItem-6');
+    cardNewItem6.classList.add ('newItem');
     const cardNewImg6 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
     cardNewImg6.classList.add ('newImgFront-6');
     const cardNewImgBack6 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
@@ -67,9 +68,10 @@ function moreElementstoPlay (){
     listContainer.appendChild (cardNewItem6);
 
   } else if (gameValue > 6 && gameValue <= 8){
-    //No sé cómo hacer para que no se me repitan
+
     const cardNewItem5 = createNewElement ('li', 'list__card');
     cardNewItem5.classList.add ('newItem-5');
+    cardNewItem5.classList.add ('newItem');
     const cardNewImg5 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
     cardNewImg5.classList.add ('newImgFront-5');
     const cardNewImgBack5 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
@@ -80,8 +82,10 @@ function moreElementstoPlay (){
 
     const cardNewItem6 = createNewElement ('li', 'list__card');
     cardNewItem6.classList.add ('newItem-6');
+
     const cardNewImg6 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
     cardNewImg6.classList.add ('newImgFront-6');
+    cardNewItem6.classList.add ('newItem');
     const cardNewImgBack6 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
     cardNewItem6Container.appendChild(cardNewImg6);
     cardNewItem6Container.appendChild(cardNewImgBack6);
@@ -90,6 +94,7 @@ function moreElementstoPlay (){
 
     const cardNewItem7 = createNewElement ('li', 'list__card');
     cardNewItem7.classList.add ('newItem-7');
+    cardNewItem7.classList.add ('newItem');
     const cardNewImg7 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
     cardNewImg7.classList.add ('newImgFront-7');
     const cardNewImgBack7 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
@@ -100,6 +105,7 @@ function moreElementstoPlay (){
 
     const cardNewItem8 = createNewElement ('li', 'list__card');
     cardNewItem8.classList.add ('newItem-8');
+    cardNewItem8.classList.add ('newItem');
     const cardNewImg8 = createNewImage ('img', 'card__img-front', 'pokemon image', '');
     cardNewImg8.classList.add ('newImgFront-8');
     const cardNewImgBack8 = createNewImage ('img', 'card__img-back', 'Adalab image', adalabImage);
@@ -113,7 +119,18 @@ function moreElementstoPlay (){
     console.log ('soy una partida de 4');
 
   }
+
 }
+
+function remove (){
+  const allNewCards = document.querySelectorAll ('.newItem');
+  for (const card of allNewCards){
+    const mother = card.parentElement;
+    mother.removeChild (card);
+  }
+}
+
+
 
 function start(){
   const ENDPOINT = api + gameValue + '.json';
