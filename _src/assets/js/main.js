@@ -6,6 +6,7 @@ const cardItem = document.querySelectorAll ('.list__card');
 const cardList = document.querySelector ('.cards__list');
 const listContainer = document.querySelector ('.list__container');
 const adalabImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
+const cardsToPlay = [];
 let gameValue='';
 let gameValueToPlay = '';
 const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
@@ -24,15 +25,20 @@ function showCard (event) {
 function whenLoad (){
   console.log ('me han recargado');
   gameValueToPlay = localStorage.getItem ('numberToPlay');
-  for (const input of inputs){
-    if (input.value === gameValueToPlay){
-      console.log ('soy igual al número para jugar', input.value);
-    } else {
-      console.log ('Yo ya no soy igual');
-    }
+  const savedCards = JSON.parse(localStorage.getItem('cards'));
+  console.log(savedCards);
+  const cardFrontImg = document.querySelectorAll ('.card__img-front');
+  for (const cards of savedCards){
+    console.log (cards);
+    console.log (cards.img);
+    console.log (cards.name);
+    console.log (cardFrontImg);
+    cardFrontImg.src = cards.img;
+
+    //ahora que las guardé tengo que hacer que se pinten. no sé como seguir.
   }
+
 }
-window.addEventListener ('load', whenLoad);
 
 function choosedValue (event){
   gameValue = event.currentTarget.value;
@@ -155,23 +161,31 @@ function remove (){
     mother.removeChild (card);
   }
 }
-
 function start(){
   moreElementstoPlay ();
   const ENDPOINT = api + gameValue + '.json';
   fetch(ENDPOINT)
     .then(response => response.json())
     .then(data => {
-      console.log (data);
       const cardFrontImg = document.querySelectorAll ('.card__img-front');
       for (let i = 0; i < gameValue; i ++){
         const pokemonImg = data[i].image;
         cardFrontImg[i].src = pokemonImg;
+        const pokemonName = data[i].name;
+        const myPokemon = {};
+        myPokemon.img = pokemonImg;
+        myPokemon.name = pokemonName;
+        //acá tengo que hacer que no se me repitan con el fin index of y el otro.
+        cardsToPlay.push (myPokemon);
       }
+      console.log (cardsToPlay);
+      localStorage.setItem('cards', JSON.stringify(cardsToPlay));
     }
     );
 }
 
-
+//voy a probar de hacer un array con las cartas que me salen para jugar y después guardarlo en local storage, no sé muy bien cuándo recuperarlo. Podría A. hacer un objeto y poner carta y data y después guardarlo. o hacer directamente un array con las imagenes.
 button.addEventListener('click', start);
+window.addEventListener ('load', whenLoad);
+
 
