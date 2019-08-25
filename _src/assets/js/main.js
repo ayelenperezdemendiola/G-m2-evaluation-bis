@@ -8,7 +8,6 @@ const listContainer = document.querySelector ('.list__container');
 const adalabImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
 let cardsToPlay = [];
 let gameValue='';
-let gameValueToPlay = '';
 const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
 let cardFrontImg = '';
@@ -25,7 +24,10 @@ function showCard (event) {
 function whenLoad (){
   console.log ('me han recargado');
   const saveGameValueToPlay = localStorage.getItem ('numberToPlay');
+  const savedCards = JSON.parse(localStorage.getItem('cards'));
   gameValue = saveGameValueToPlay;
+  moreElementstoPlay();
+  const loadCardFrontImg = document.querySelectorAll('.card__img-front');
 
   for (const input of inputs){
     const inputValue = input.value;
@@ -33,18 +35,8 @@ function whenLoad (){
       input.setAttribute ('checked', 'checked');
     }
   }
-
-  const savedCards = JSON.parse(localStorage.getItem('cards'));
-  const loadCardFrontImg = document.querySelectorAll('.card__img-front');
-
-  moreElementstoPlay();
   for (let i = 0; i < gameValue; i ++){
-    console.log (loadCardFrontImg[i].src);
-  }
-  for (let i = 0; i < gameValue; i ++){
-    console.log (savedCards[i].img);
     loadCardFrontImg[i].src = savedCards[i].img;
-    console.log (loadCardFrontImg[i]);
   }
 
 }
