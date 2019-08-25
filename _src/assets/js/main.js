@@ -6,7 +6,7 @@ const cardItem = document.querySelectorAll ('.list__card');
 const cardList = document.querySelector ('.cards__list');
 const listContainer = document.querySelector ('.list__container');
 const adalabImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
-const cardsToPlay = [];
+let cardsToPlay = [];
 let gameValue='';
 let gameValueToPlay = '';
 const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
@@ -24,19 +24,36 @@ function showCard (event) {
 
 function whenLoad (){
   console.log ('me han recargado');
-  gameValueToPlay = localStorage.getItem ('numberToPlay');
-  const savedCards = JSON.parse(localStorage.getItem('cards'));
-  console.log(savedCards);
-  const cardFrontImg = document.querySelectorAll ('.card__img-front');
-  for (const cards of savedCards){
-    console.log (cards);
-    console.log (cards.img);
-    console.log (cards.name);
-    console.log (cardFrontImg);
-    cardFrontImg.src = cards.img;
-
-    //ahora que las guardé tengo que hacer que se pinten. no sé como seguir.
+  const saveGameValueToPlay = localStorage.getItem ('numberToPlay');
+  gameValue = saveGameValueToPlay;
+  console.log (saveGameValueToPlay);
+  for (const input of inputs){
+    const inputValue = input.value;
+    console.log (inputValue);
+    if (inputValue === saveGameValueToPlay){
+      console.log (input);
+      input.setAttribute ('checked', 'checked');
+    }
   }
+  //   if (inputValue === saveGameValueToPlay){
+  //     input.setAttribute ('checked', 'checked');
+  //   } else {
+  //     console.log ('números restantes');
+  //   }
+  // }
+  // const savedCards = JSON.parse(localStorage.getItem('cards'));
+  // console.log (savedCards);
+  // console.log(savedCards);
+  // const cardFrontImg = document.querySelectorAll ('.card__img-front');
+  // for (const image of cardFrontImg){
+  //     console.log (image);
+  // }
+  // for (const cards of savedCards){
+  //   console.log (cards);
+  //   cardFrontImg.src = cards.img;
+
+  //   ahora que las guardé tengo que hacer que se pinten. no sé como seguir.
+  // }
 
 }
 
@@ -156,6 +173,7 @@ function moreElementstoPlay (){
 
 function remove (){
   const allNewCards = document.querySelectorAll ('.newItem');
+  cardsToPlay = [];
   for (const card of allNewCards){
     const mother = card.parentElement;
     mother.removeChild (card);
