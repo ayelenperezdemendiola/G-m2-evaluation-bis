@@ -11,7 +11,7 @@ let gameValue='';
 let gameValueToPlay = '';
 const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
-
+let cardFrontImg = '';
 
 function showCard (event) {
   const currentContainer = event.currentTarget;
@@ -26,34 +26,26 @@ function whenLoad (){
   console.log ('me han recargado');
   const saveGameValueToPlay = localStorage.getItem ('numberToPlay');
   gameValue = saveGameValueToPlay;
-  console.log (saveGameValueToPlay);
+
   for (const input of inputs){
     const inputValue = input.value;
-    console.log (inputValue);
     if (inputValue === saveGameValueToPlay){
-      console.log (input);
       input.setAttribute ('checked', 'checked');
     }
   }
-  //   if (inputValue === saveGameValueToPlay){
-  //     input.setAttribute ('checked', 'checked');
-  //   } else {
-  //     console.log ('números restantes');
-  //   }
-  // }
-  // const savedCards = JSON.parse(localStorage.getItem('cards'));
-  // console.log (savedCards);
-  // console.log(savedCards);
-  // const cardFrontImg = document.querySelectorAll ('.card__img-front');
-  // for (const image of cardFrontImg){
-  //     console.log (image);
-  // }
-  // for (const cards of savedCards){
-  //   console.log (cards);
-  //   cardFrontImg.src = cards.img;
 
-  //   ahora que las guardé tengo que hacer que se pinten. no sé como seguir.
-  // }
+  const savedCards = JSON.parse(localStorage.getItem('cards'));
+  const loadCardFrontImg = document.querySelectorAll('.card__img-front');
+
+  moreElementstoPlay();
+  for (let i = 0; i < gameValue; i ++){
+    console.log (loadCardFrontImg[i].src);
+  }
+  for (let i = 0; i < gameValue; i ++){
+    console.log (savedCards[i].img);
+    loadCardFrontImg[i].src = savedCards[i].img;
+    console.log (loadCardFrontImg[i]);
+  }
 
 }
 
@@ -185,7 +177,7 @@ function start(){
   fetch(ENDPOINT)
     .then(response => response.json())
     .then(data => {
-      const cardFrontImg = document.querySelectorAll ('.card__img-front');
+      cardFrontImg = document.querySelectorAll ('.card__img-front');
       for (let i = 0; i < gameValue; i ++){
         const pokemonImg = data[i].image;
         cardFrontImg[i].src = pokemonImg;
@@ -193,10 +185,8 @@ function start(){
         const myPokemon = {};
         myPokemon.img = pokemonImg;
         myPokemon.name = pokemonName;
-        //acá tengo que hacer que no se me repitan con el fin index of y el otro.
         cardsToPlay.push (myPokemon);
       }
-      console.log (cardsToPlay);
       localStorage.setItem('cards', JSON.stringify(cardsToPlay));
     }
     );
