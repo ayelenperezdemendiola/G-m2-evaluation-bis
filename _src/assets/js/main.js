@@ -18,8 +18,24 @@ function showCard (event) {
   currentImgFront.classList.toggle ('show');
   const currentImgBack = currentContainer.querySelector ('.card__img-back');
   currentImgBack.classList.toggle ('hide');
-
 }
+
+// function hideCards (){
+//   const imgFront = document.querySelectorAll ('.card__img-front');
+//   const imgBack = document.querySelectorAll ('.card__img-back');
+//   for (const img of imgFront){
+//     if ( img.classList.contains ('show') === true){
+//       img.classList.remove ('show');
+//       img.classList.add ('hide');
+//     }
+//   }
+//   for (const img of imgBack){
+//     if ( img.classList.contains ('hide') === true){
+//       img.classList.remove ('hide');
+//       img.classList.add ('show');
+//     }
+//   }
+// }
 
 function whenLoad (){
   console.log ('me han recargado');
@@ -28,7 +44,6 @@ function whenLoad (){
   gameValue = saveGameValueToPlay;
   moreElementstoPlay();
   const loadCardFrontImg = document.querySelectorAll('.card__img-front');
-
   for (const input of inputs){
     const inputValue = input.value;
     if (inputValue === saveGameValueToPlay){
@@ -38,7 +53,6 @@ function whenLoad (){
   for (let i = 0; i < gameValue; i ++){
     loadCardFrontImg[i].src = savedCards[i].img;
   }
-
 }
 
 function choosedValue (event){
@@ -49,6 +63,7 @@ function choosedValue (event){
 
 for (const input of inputs){
   input.addEventListener ('click', choosedValue);
+  // input.addEventListener ('click', hideCards);
 }
 
 function createNewElement (myElement, myclass){
@@ -184,7 +199,6 @@ function start(){
     );
 }
 
-//voy a probar de hacer un array con las cartas que me salen para jugar y después guardarlo en local storage, no sé muy bien cuándo recuperarlo. Podría A. hacer un objeto y poner carta y data y después guardarlo. o hacer directamente un array con las imagenes.
 button.addEventListener('click', start);
 window.addEventListener ('load', whenLoad);
 
