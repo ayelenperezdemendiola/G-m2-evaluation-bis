@@ -20,22 +20,18 @@ function showCard (event) {
   currentImgBack.classList.toggle ('hide');
 }
 
-// function hideCards (){
-//   const imgFront = document.querySelectorAll ('.card__img-front');
-//   const imgBack = document.querySelectorAll ('.card__img-back');
-//   for (const img of imgFront){
-//     if ( img.classList.contains ('show') === true){
-//       img.classList.remove ('show');
-//       img.classList.add ('hide');
-//     }
-//   }
-//   for (const img of imgBack){
-//     if ( img.classList.contains ('hide') === true){
-//       img.classList.remove ('hide');
-//       img.classList.add ('show');
-//     }
-//   }
-// }
+function hideCards (){
+  const imgFront = document.querySelectorAll ('.card__img-front');
+  const imgBack = document.querySelectorAll ('.card__img-back');
+//seguir desde acá
+  for (const img of imgFront){
+    img.classList.remove ('show');
+  }
+  for (const img of imgBack){
+    img.classList.add ('show');
+    img.classList.remove ('hide');
+  }
+}
 
 function whenLoad (){
   console.log ('me han recargado');
@@ -63,7 +59,7 @@ function choosedValue (event){
 
 for (const input of inputs){
   input.addEventListener ('click', choosedValue);
-  // input.addEventListener ('click', hideCards);
+  input.addEventListener ('click', hideCards);
 }
 
 function createNewElement (myElement, myclass){
