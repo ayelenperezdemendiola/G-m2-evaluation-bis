@@ -11,20 +11,61 @@ let gameValue='';
 const defaultImage = 'https://via.placeholder.com/160x195/FF4500/ffffff/?text=?';
 const api = 'https://raw.githubusercontent.com/Adalab/cards-data/master/';
 let cardFrontImg = '';
+let namesArr = [];
+let firstClickName = '';
+let firstClickContainer = '';
+let firstClickContainerBack = '';
+let secondClickName = '';
+let secondClickContainer = '';
+let secondClickContainerBack = '';
+// Cuando se hace clic en una primera carta esta se da la vuelta y nos muestra su pokemon (como hasta ahora).
+// Al hacer clic en una segunda carta esta se da la vuelta y: si es la pareja de la primera las dos se quedan boca arriba (como hasta ahora),
+
 
 function showCard (event) {
   const currentContainer = event.currentTarget;
   const currentImgFront = currentContainer.querySelector ('.card__img-front');
+  const currentImgName = currentImgFront.getAttribute('data--name');
   currentImgFront.classList.toggle ('show');
   const currentImgBack = currentContainer.querySelector ('.card__img-back');
   currentImgBack.classList.toggle ('hide');
+
+  const currentElement = {};
+  currentElement.name = currentImgName;
+  currentElement.container = currentImgFront;
+  currentElement.back = currentImgBack;
+  namesArr.push(currentElement);
+
+  firstClickName = namesArr[0].name;
+  firstClickContainer = namesArr[0].container;
+  firstClickContainerBack = namesArr[0].back;
+
+  secondClickName = namesArr[1].name;
+  secondClickContainer = namesArr[1].container;
+  secondClickContainerBack = namesArr[1].back;
+
+  if (firstClickName === secondClickName === true){
+    console.log ('¡You won!');
+  } else if (firstClickName === secondClickName !== true){
+    notMatch();
+  }
 }
+
+function notMatch (){
+  console.log ('try again');
+  firstClickContainer.classList.add ('hide');
+  secondClickContainer.classList.add ('hide');
+  firstClickContainerBack.classList.remove ('hide');
+  secondClickContainerBack.classList.remove ('hide');
+  firstClickContainerBack.classList.add ('show');
+  secondClickContainerBack.classList.add ('show');
+}
+setTimeout(notMatch, 2000);
 
 function hideCards (){
   const imgFront = document.querySelectorAll ('.card__img-front');
   const imgBack = document.querySelectorAll ('.card__img-back');
-//seguir desde acá
-  for (const img of imgFront){
+  for(const img of imgFront){
     img.classList.remove ('show');
   }
   for (const img of imgBack){
@@ -185,6 +226,7 @@ function start(){
         const pokemonImg = data[i].image;
         cardFrontImg[i].src = pokemonImg;
         const pokemonName = data[i].name;
+        cardFrontImg[i].setAttribute('data--name', data[i].name);
         const myPokemon = {};
         myPokemon.img = pokemonImg;
         myPokemon.name = pokemonName;
